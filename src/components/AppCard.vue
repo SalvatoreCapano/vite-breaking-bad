@@ -11,14 +11,18 @@
         }
       },
       props: {
-        elem: Object
+        elem: Object,
+        isPlaceholder: {
+          type: Boolean,
+          default: false
+        }
       }
   }
 </script>
 
 <template>
       
-      <div class="card">
+      <div class="card" v-if="!isPlaceholder">
 
         <div class="imgContainer">
           <img :src="elem.card_images[0].image_url" alt="">
@@ -27,16 +31,20 @@
         <span class="race">{{ elem.race }}</span>
 
       </div> <!-- /card-->
+      <div class="card placeholder" v-else></div>
 
 </template>
 
 <style lang="scss" scoped>
   .card {
     width: 250px;
+    height: 450px;
     padding: 10px;
 
     background-color: #ffffff;
     border: 2px solid #111111;
+
+    overflow: hidden;
 
     .imgContainer {
       width: 100%;
@@ -53,6 +61,36 @@
 
     .race {
       font-size: 0.85rem;
+    }
+
+    &.placeholder {
+      position: relative;
+
+      &::after {
+        content: '';
+
+        position: absolute;
+        bottom: -50px;
+
+        width: 530px;
+        height: 90px;
+
+        transform: rotate(-60deg);
+        transform-origin: left;
+
+        background: linear-gradient(0deg, rgba(255,255,255,0) 20%, rgba(136,136,136,0.7512437810945274) 50%, rgba(255,255,255,0) 80%); 
+      
+        animation: placeholderAnimation 0.5s infinite linear;
+      }
+    }
+  }
+
+  @keyframes placeholderAnimation {
+    from {
+      left: -150px;
+    }
+    to {
+      left: 100%
     }
   }
 </style>

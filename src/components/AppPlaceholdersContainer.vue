@@ -9,6 +9,9 @@
       components: {
         card
       },
+      props: {
+        cardsNumber: Number
+      },
       data () {
         return {
           store
@@ -23,7 +26,7 @@
 
     <div class="cardsContainer">
 
-      <card v-for="elem in store.results" :elem="elem"/>
+      <card v-for="num in cardsNumber" :isPlaceholder="true"/>
 
     </div> <!-- /cardsContainer-->
 

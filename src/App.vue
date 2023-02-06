@@ -5,6 +5,7 @@
 
   import searchForm from './components/AppSearchForm.vue'
   import resultsCount from './components/AppResultsCount.vue'
+  import placeholdersContainer from './components/AppPlaceholdersContainer.vue'
   import cardsContainer from './components/AppCardsContainer.vue'
 
   export default {
@@ -12,19 +13,23 @@
     components: {
       searchForm,
       resultsCount,
+      placeholdersContainer,
       cardsContainer,
     },
     data () {
       return {
-        store
+        store,
+        cardsNumber: 20,
+        downloadCompleted: false
       }
     },
     created () {
       axios.get(`https://db.ygoprodeck.com/api/v7/cardinfo.php`)
         .then((response) => {
-          this.store.results = response.data.data.slice(0,20);
+          this.store.results = response.data.data.slice(0,this.cardsNumber);
           console.log(this.store.results);
           console.log("Store", store);
+          this.downloadCompleted = true;
         });
     }
 };
@@ -56,7 +61,9 @@
 
     <resultsCount />
 
-    <cardsContainer />
+    <placeholdersContainer v-if="!downloadCompleted" :cardsNumber="cardsNumber"/>
+
+    <cardsContainer v-else/>
         
   </main>
 
