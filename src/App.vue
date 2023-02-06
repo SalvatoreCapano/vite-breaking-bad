@@ -1,12 +1,32 @@
 <script>
 
-  import HelloWorld from './components/HelloWorld.vue'
+  import axios from 'axios';
+  import { store } from './store.js';
+
+  import searchForm from './components/AppSearchForm.vue'
+  import resultsCount from './components/AppResultsCount.vue'
+  import cardsContainer from './components/AppCardsContainer.vue'
 
   export default {
-  name: "App",
-  components: {
-      HelloWorld
-  }
+    name: "App",
+    components: {
+      searchForm,
+      resultsCount,
+      cardsContainer,
+    },
+    data () {
+      return {
+        store
+      }
+    },
+    created () {
+      axios.get(`https://db.ygoprodeck.com/api/v7/cardinfo.php`)
+        .then((response) => {
+          this.store.results = response.data.data.slice(0,20);
+          console.log(this.store.results);
+          console.log("Store", store);
+        });
+    }
 };
 </script>
 
@@ -17,9 +37,11 @@
 
     <div class="container">
 
-      <div class="logo">
+      <a href="#">
+        <div class="logo">
         <img src="./assets/logo.webp" alt="Yu-Gi-Oh">
-      </div> <!-- /logo-->
+        </div> <!-- /logo-->
+      </a>
 
       <h1 class="mainTitle">Yu-Gi-Oh API</h1>
 
@@ -33,10 +55,9 @@
     <searchForm />
 
     <resultsCount />
-    
-    <div class="cardsContainer">
-    </div> <!-- /cardsContainer-->
 
+    <cardsContainer />
+        
   </main>
 
 </template>
@@ -45,6 +66,11 @@
 @import "style/partials/reset.scss";
 
   header {
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+
     background-color: #ffffff;
     box-shadow: 0px 6px 24px 1px #00000025;
 
@@ -63,6 +89,12 @@
     img {
       height: 100%;
     }
+  }
+
+  main {
+    background-color: #dcdcdc;
+
+    padding: 1rem 0;
   }
 
 </style>
