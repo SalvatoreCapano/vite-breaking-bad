@@ -1,23 +1,24 @@
 <script>
 
+  import { store } from '../store.js';
+
   export default {
-      name: 'searchForm',
-      data() {
-        return {
-          races: ["Aqua", "Beast", "Beast-Warrior", "Creator-God", "Cyberse", "Dinosaur", "Divine-Beast", "Dragon",
-                  "Fairy", "Fiend", "Fish", "Insect", "Machine", "Plant", "Psychic", "Pyro", "Reptile", "Rock",
-                  "Sea Serpent", "Spellcaster", "Thunder", "Warrior", "Winged Beast", "Wyrm", "Zombie", ]
-        }
+    name: 'searchForm',
+    data() {
+      return {
+        store
       }
+    }
   }
+  
 </script>
 
 <template>
   <div class="container">
 
-    <select name="race" id="race">
-      <option value="" selected>-- Select a race --</option>
-      <option v-for="race in races" :value="race">{{ race }}</option>
+    <select id="archetypeInput" v-model="store.selectedArchetype" @change="$emit('search'), this.store.downloadCompleted = false">
+      <option value="" selected>-- Select an archetype --</option>
+      <option v-for="archetype in this.store.archetypes" :value="archetype.archetype_name.toLowerCase()">{{ archetype.archetype_name }}</option>
     </select>
 
   </div> <!-- /container-->

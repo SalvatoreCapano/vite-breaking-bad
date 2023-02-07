@@ -1,19 +1,18 @@
 <script>
 
   import { store } from '../store.js';
-
   import card from '../components/AppCard.vue'
 
   export default {
-      name: 'cardsContainer',
-      components: {
-        card
-      },
-      data () {
-        return {
-          store
-        }
+    name: 'cardsContainer',
+    components: {
+      card
+    },
+    data () {
+      return {
+        store
       }
+    }
   }
 </script>
 

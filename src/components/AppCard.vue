@@ -2,7 +2,6 @@
 
   import { store } from '../store.js';
 
-
   export default {
       name: 'card',
       data () {
@@ -31,7 +30,9 @@
         <span class="race">{{ elem.race }}</span>
 
       </div> <!-- /card-->
-      <div class="card placeholder" v-else></div>
+
+      <div class="card placeholder" v-else>
+      </div> <!-- /card placeholder-->
 
 </template>
 
